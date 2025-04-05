@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronRight } from 'lucide-react';
@@ -10,11 +9,34 @@ import CTASection from '@/components/CTASection';
 
 const Index = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [parallaxLayers, setParallaxLayers] = useState<Array<{ x: number; y: number }>>([
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 }
+  ]);
 
-  // Track mouse position for subtle background animation
+  // Enhanced mouse tracking for parallax effect
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left; 
+        const y = e.clientY - rect.top;
+        setMousePosition({ x, y });
+        
+        // Calculate movement for different layers based on mouse position
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const moveX = (x - centerX) / 25;
+        const moveY = (y - centerY) / 25;
+        
+        setParallaxLayers([
+          { x: moveX * 0.3, y: moveY * 0.3 },  // Subtle movement
+          { x: moveX * 0.5, y: moveY * 0.5 },  // Medium movement
+          { x: moveX * 0.8, y: moveY * 0.8 },  // Stronger movement
+        ]);
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -23,25 +45,41 @@ const Index = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Background with subtle mouse movement */}
+      {/* Hero Section with enhanced parallax effect */}
+      <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden">
+        {/* Parallax background layers */}
         <div 
-          className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1559310278-18a9192d909f?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center"
+          className="absolute inset-0 parallax-layer"
           style={{
-            transform: `translate(${mousePosition.x / 100}px, ${mousePosition.y / 100}px)`,
-            transition: 'transform 0.2s ease-out'
+            transform: `translate(${parallaxLayers[0].x}px, ${parallaxLayers[0].y}px)`,
+            backgroundImage: `url('https://images.unsplash.com/photo-1559310278-18a9192d909f?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
           }}
         >
-          <div className="absolute inset-0 bg-white/80 backdrop-blur-sm"></div>
+          <div className="absolute inset-0 bg-white/70 backdrop-blur-sm"></div>
         </div>
+        
+        {/* Decorative elements that move with cursor */}
+        <div 
+          className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-maple-200/30 parallax-layer"
+          style={{
+            transform: `translate(${parallaxLayers[1].x * 2}px, ${parallaxLayers[1].y * 2}px)`,
+          }}
+        ></div>
+        <div 
+          className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full bg-gold-200/30 parallax-layer"
+          style={{
+            transform: `translate(${parallaxLayers[2].x * 2}px, ${parallaxLayers[2].y * 2}px)`,
+          }}
+        ></div>
         
         <div className="container-custom relative z-10">
           <div className="max-w-3xl">
             <h1 className="heading-xl mb-4 animate-fade-in">
               Transform Your Floors into Masterpieces
             </h1>
-            <p className="text-xl sm:text-2xl font-playfair text-gold-600 mb-6 animate-fade-in animation-delay-300">
+            <p className="text-xl sm:text-2xl font-cormorant text-gold-600 mb-6 animate-fade-in animation-delay-300">
               Luxury on a Budget
             </p>
             <p className="paragraph mb-8 max-w-2xl animate-fade-in animation-delay-500">
@@ -52,8 +90,8 @@ const Index = () => {
                 <Link to="/services">Explore Services</Link>
               </Button>
               <Button asChild variant="outline" className="btn-secondary text-lg">
-                <Link to="/contact" className="flex items-center">
-                  Contact Us <ChevronRight className="ml-1 h-4 w-4" />
+                <Link to="/login" className="flex items-center">
+                  Login <ChevronRight className="ml-1 h-4 w-4" />
                 </Link>
               </Button>
             </div>
