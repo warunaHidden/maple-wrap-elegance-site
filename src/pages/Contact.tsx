@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -70,6 +70,33 @@ const Contact = () => {
     },
   });
 
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [parallaxLayers, setParallaxLayers] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+
+  // Enhanced mouse tracking for parallax effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left; 
+        const y = e.clientY - rect.top;
+        setMousePosition({ x, y });
+        
+        // Calculate movement based on mouse position
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const moveX = (x - centerX) / 25;
+        const moveY = (y - centerY) / 25;
+        
+        setParallaxLayers({ x: moveX * 0.4, y: moveY * 0.4 });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   const onSubmit = (data: FormValues) => {
     setIsSubmitting(true);
     
@@ -87,9 +114,19 @@ const Contact = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-gradient-to-b from-gold-50 to-white">
-        <div className="container-custom">
+      {/* Hero Section with Parallax Effect */}
+      <section ref={heroRef} className="pt-32 pb-16 bg-gradient-to-b from-gold-50 to-white relative overflow-hidden">
+        {/* Parallax background layer */}
+        <div 
+          className="absolute inset-0 parallax-layer"
+          style={{
+            transform: `translate(${parallaxLayers.x}px, ${parallaxLayers.y}px)`,
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgb(212, 175, 130, 0.2) 0%, rgba(255, 255, 255, 0) 50%)`,
+          }}
+        >
+        </div>
+        
+        <div className="container-custom relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="heading-xl mb-6 animate-fade-in">Contact Us</h1>
             <p className="paragraph max-w-2xl mx-auto animate-fade-in animation-delay-300">
@@ -118,7 +155,11 @@ const Contact = () => {
                           <FormItem>
                             <FormLabel>Full Name</FormLabel>
                             <FormControl>
-                              <Input placeholder="Your name" {...field} />
+                              <Input 
+                                placeholder="Your name" 
+                                {...field} 
+                                className="hover:border-maple-300 focus:ring-maple-300 transition-all transform hover:-translate-y-1"
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -132,7 +173,11 @@ const Contact = () => {
                           <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                              <Input placeholder="Your email" {...field} />
+                              <Input 
+                                placeholder="Your email" 
+                                {...field} 
+                                className="hover:border-maple-300 focus:ring-maple-300 transition-all transform hover:-translate-y-1"
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -148,7 +193,11 @@ const Contact = () => {
                           <FormItem>
                             <FormLabel>Phone Number</FormLabel>
                             <FormControl>
-                              <Input placeholder="Your phone number" {...field} />
+                              <Input 
+                                placeholder="Your phone number" 
+                                {...field} 
+                                className="hover:border-maple-300 focus:ring-maple-300 transition-all transform hover:-translate-y-1"
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -166,11 +215,11 @@ const Contact = () => {
                               defaultValue={field.value}
                             >
                               <FormControl>
-                                <SelectTrigger>
+                                <SelectTrigger className="hover:border-maple-300 focus:ring-maple-300 transition-all transform hover:-translate-y-1">
                                   <SelectValue placeholder="Select a service" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent>
+                              <SelectContent className="z-50">
                                 <SelectItem value="floor-wraps">Pre-Designed Floor Wraps</SelectItem>
                                 <SelectItem value="installation">Setup & Installation</SelectItem>
                                 <SelectItem value="event-package">Event Package</SelectItem>
@@ -193,7 +242,7 @@ const Contact = () => {
                           <FormControl>
                             <Textarea 
                               placeholder="Tell us about your project or question" 
-                              className="min-h-32" 
+                              className="min-h-32 hover:border-maple-300 focus:ring-maple-300 transition-all transform hover:-translate-y-1" 
                               {...field} 
                             />
                           </FormControl>
@@ -204,7 +253,7 @@ const Contact = () => {
                     
                     <Button 
                       type="submit" 
-                      className="btn-primary w-full" 
+                      className="btn-primary w-full animate-pulse-gentle" 
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? 'Sending...' : 'Send Message'}

@@ -1,14 +1,52 @@
 
+import { useState, useRef, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import SectionHeading from '@/components/SectionHeading';
 import CTASection from '@/components/CTASection';
 
 const About = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [parallaxLayers, setParallaxLayers] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+
+  // Enhanced mouse tracking for parallax effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left; 
+        const y = e.clientY - rect.top;
+        setMousePosition({ x, y });
+        
+        // Calculate movement based on mouse position
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const moveX = (x - centerX) / 25;
+        const moveY = (y - centerY) / 25;
+        
+        setParallaxLayers({ x: moveX * 0.4, y: moveY * 0.4 });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-gradient-to-b from-gold-50 to-white">
-        <div className="container-custom">
+      {/* Hero Section with Parallax Effect */}
+      <section ref={heroRef} className="pt-32 pb-16 bg-gradient-to-b from-gold-50 to-white relative overflow-hidden">
+        {/* Parallax background layer */}
+        <div 
+          className="absolute inset-0 parallax-layer"
+          style={{
+            transform: `translate(${parallaxLayers.x}px, ${parallaxLayers.y}px)`,
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgb(212, 175, 130, 0.2) 0%, rgba(255, 255, 255, 0) 50%)`,
+          }}
+        >
+        </div>
+        
+        <div className="container-custom relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="heading-xl mb-6 animate-fade-in">About Maple Wraps</h1>
             <p className="paragraph max-w-2xl mx-auto animate-fade-in animation-delay-300">

@@ -46,6 +46,14 @@ const Index = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  // Animate text appearing when page loads
+  useEffect(() => {
+    const animateText = document.querySelector('.typewriter');
+    if (animateText) {
+      animateText.classList.add('animate-typewriter');
+    }
+  }, []);
+
   return (
     <Layout>
       {/* Hero Section with enhanced parallax effect */}
@@ -62,6 +70,14 @@ const Index = () => {
         >
           <div className="absolute inset-0 bg-white/70 backdrop-blur-sm"></div>
         </div>
+        
+        {/* Radial gradient that follows the cursor */}
+        <div 
+          className="absolute inset-0 bg-transparent"
+          style={{
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(214, 176, 130, 0.15) 0%, rgba(255, 255, 255, 0) 50%)`,
+          }}
+        ></div>
         
         {/* Decorative elements that move with cursor */}
         <div 
@@ -95,8 +111,10 @@ const Index = () => {
         
         <div className="container-custom relative z-10">
           <div className="max-w-3xl">
-            <h1 className="heading-xl mb-4 animate-fade-in">
-              Transform Your Floors into Masterpieces
+            <h1 className="heading-xl mb-4">
+              <span className="typewriter inline-block overflow-hidden whitespace-nowrap border-r-4 border-maple-500 pr-1">
+                Transform Your Floors into Masterpieces
+              </span>
             </h1>
             <p className="text-xl sm:text-2xl font-dmsans text-gold-600 mb-6 animate-fade-in animation-delay-300">
               Luxury on a Budget
@@ -109,8 +127,8 @@ const Index = () => {
                 <Link to="/services">Explore Services</Link>
               </Button>
               <Button asChild variant="outline" className="btn-secondary text-lg">
-                <Link to="/login" className="flex items-center">
-                  Login <ChevronRight className="ml-1 h-4 w-4" />
+                <Link to="/pricing-calculator" className="flex items-center">
+                  Pricing Calculator <ChevronRight className="ml-1 h-4 w-4" />
                 </Link>
               </Button>
             </div>

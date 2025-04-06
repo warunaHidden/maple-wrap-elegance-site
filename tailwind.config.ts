@@ -129,6 +129,14 @@ export default {
 				'zoom-in': {
 					'0%': { transform: 'scale(0.95)', opacity: '0' },
 					'100%': { transform: 'scale(1)', opacity: '1' }
+				},
+				'typing': {
+					'0%': { width: '0' },
+					'100%': { width: '100%' }
+				},
+				'blink-caret': {
+					'0%, 100%': { borderColor: 'transparent' },
+					'50%': { borderColor: 'hsl(var(--primary))' }
 				}
 			},
 			animation: {
@@ -141,7 +149,8 @@ export default {
 				'float': 'float 6s ease-in-out infinite',
 				'pulse-gentle': 'pulse-gentle 3s ease-in-out infinite',
 				'tilt': 'tilt 4s ease-in-out infinite',
-				'zoom-in': 'zoom-in 0.7s ease-out forwards'
+				'zoom-in': 'zoom-in 0.7s ease-out forwards',
+				'typewriter': 'typing 3.5s steps(40, end), blink-caret .75s step-end infinite'
 			}
 		}
 	},

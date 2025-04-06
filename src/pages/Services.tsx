@@ -1,4 +1,5 @@
 
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronRight } from 'lucide-react';
@@ -41,20 +42,62 @@ const ServiceCard = ({
             </li>
           ))}
         </ul>
-        <Button asChild className="btn-primary reveal animation-delay-700">
-          <Link to="/contact">Request Quote</Link>
-        </Button>
+        <div className="flex space-x-4">
+          <Button asChild className="btn-primary reveal animation-delay-700">
+            <Link to="/contact">Request Quote</Link>
+          </Button>
+          <Button asChild variant="outline" className="btn-secondary reveal animation-delay-700">
+            <Link to="/pricing-calculator">Calculate Price</Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
 };
 
 const Services = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [parallaxLayers, setParallaxLayers] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+
+  // Enhanced mouse tracking for parallax effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left; 
+        const y = e.clientY - rect.top;
+        setMousePosition({ x, y });
+        
+        // Calculate movement based on mouse position
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const moveX = (x - centerX) / 25;
+        const moveY = (y - centerY) / 25;
+        
+        setParallaxLayers({ x: moveX * 0.4, y: moveY * 0.4 });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-gradient-to-b from-maple-50 to-white">
-        <div className="container-custom">
+      {/* Hero Section with Parallax Effect */}
+      <section ref={heroRef} className="pt-32 pb-16 bg-gradient-to-b from-maple-50 to-white relative overflow-hidden">
+        {/* Parallax background layer */}
+        <div 
+          className="absolute inset-0 parallax-layer"
+          style={{
+            transform: `translate(${parallaxLayers.x}px, ${parallaxLayers.y}px)`,
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgb(212, 175, 130, 0.2) 0%, rgba(255, 255, 255, 0) 50%)`,
+          }}
+        >
+        </div>
+        
+        <div className="container-custom relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="heading-xl mb-6 animate-fade-in">Our Services</h1>
             <p className="paragraph max-w-2xl mx-auto animate-fade-in animation-delay-300">
