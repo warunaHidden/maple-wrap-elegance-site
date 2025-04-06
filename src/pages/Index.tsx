@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -11,6 +12,7 @@ const Index = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef<HTMLDivElement>(null);
   const [parallaxLayers, setParallaxLayers] = useState<Array<{ x: number; y: number }>>([
+    { x: 0, y: 0 },
     { x: 0, y: 0 },
     { x: 0, y: 0 },
     { x: 0, y: 0 }
@@ -32,8 +34,9 @@ const Index = () => {
         const moveY = (y - centerY) / 25;
         
         setParallaxLayers([
-          { x: moveX * 0.3, y: moveY * 0.3 },  // Subtle movement
-          { x: moveX * 0.5, y: moveY * 0.5 },  // Medium movement
+          { x: moveX * 0.2, y: moveY * 0.2 },  // Very subtle movement
+          { x: moveX * 0.4, y: moveY * 0.4 },  // Subtle movement
+          { x: moveX * 0.6, y: moveY * 0.6 },  // Medium movement
           { x: moveX * 0.8, y: moveY * 0.8 },  // Stronger movement
         ]);
       }
@@ -74,12 +77,28 @@ const Index = () => {
           }}
         ></div>
         
+        {/* Additional floating elements for enhanced visual effect */}
+        <div 
+          className="absolute top-1/3 right-1/3 w-24 h-24 rounded-full bg-maple-100/20 parallax-layer animate-float"
+          style={{
+            transform: `translate(${parallaxLayers[3].x * 3}px, ${parallaxLayers[3].y * 3}px)`,
+            animationDelay: '1s'
+          }}
+        ></div>
+        <div 
+          className="absolute bottom-1/3 left-1/3 w-20 h-20 rounded-full bg-gold-100/20 parallax-layer animate-float"
+          style={{
+            transform: `translate(${parallaxLayers[3].x * 2.5}px, ${parallaxLayers[3].y * 2.5}px)`,
+            animationDelay: '2s'
+          }}
+        ></div>
+        
         <div className="container-custom relative z-10">
           <div className="max-w-3xl">
             <h1 className="heading-xl mb-4 animate-fade-in">
               Transform Your Floors into Masterpieces
             </h1>
-            <p className="text-xl sm:text-2xl font-cormorant text-gold-600 mb-6 animate-fade-in animation-delay-300">
+            <p className="text-xl sm:text-2xl font-dmsans text-gold-600 mb-6 animate-fade-in animation-delay-300">
               Luxury on a Budget
             </p>
             <p className="paragraph mb-8 max-w-2xl animate-fade-in animation-delay-500">
@@ -104,11 +123,13 @@ const Index = () => {
         <div className="container-custom">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="lg:w-1/2">
-              <img 
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
-                alt="Elegant floor wrap in modern home" 
-                className="rounded-xl shadow-xl reveal"
-              />
+              <div className="image-card overflow-hidden rounded-xl shadow-xl reveal transform transition-all duration-500 hover:scale-105">
+                <img 
+                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                  alt="Elegant floor wrap in modern home"
+                  className="w-full h-full object-cover transition-all duration-700 hover:scale-110"
+                />
+              </div>
             </div>
             <div className="lg:w-1/2">
               <h2 className="heading-lg mb-6 reveal">About Maple Wraps</h2>
@@ -118,7 +139,7 @@ const Index = () => {
               <p className="paragraph mb-8 reveal animation-delay-500">
                 Whether you're planning a wedding, corporate event, or looking to elevate your home or business space, our floor wraps create an instant transformation that will leave a lasting impression.
               </p>
-              <Button asChild className="btn-secondary reveal animation-delay-700">
+              <Button asChild className="btn-secondary reveal animation-delay-700 hover:scale-105 transition-transform">
                 <Link to="/about">Learn More About Us</Link>
               </Button>
             </div>
@@ -178,14 +199,14 @@ const Index = () => {
           </div>
           
           <div className="text-center mt-12">
-            <Button asChild className="btn-primary reveal">
+            <Button asChild className="btn-primary reveal hover:scale-105 transition-transform">
               <Link to="/services">View All Services</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Gallery Section */}
+      {/* Gallery Section with enhanced animations */}
       <section className="py-20">
         <div className="container-custom">
           <SectionHeading 
@@ -213,10 +234,10 @@ const Index = () => {
                 <img 
                   src={img} 
                   alt={`Floor wrap installation ${index + 1}`}
-                  className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                  <div className="p-6">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end">
+                  <div className="p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                     <p className="text-white font-medium">Installation {index + 1}</p>
                   </div>
                 </div>
@@ -255,7 +276,7 @@ const Index = () => {
             ].map((testimonial, index) => (
               <div 
                 key={index}
-                className={`bg-white p-8 rounded-xl shadow-md reveal ${
+                className={`bg-white p-8 rounded-xl shadow-md reveal hover:shadow-xl transition-all duration-300 hover:-translate-y-2 ${
                   index === 0 ? 'animation-delay-300' : 
                   index === 1 ? 'animation-delay-500' : 'animation-delay-700'
                 }`}

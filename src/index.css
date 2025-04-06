@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Cormorant:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,13 +7,13 @@
 
 @layer base {
   :root {
-    --background: 30 25% 98%;
+    --background: 40 30% 99%;
     --foreground: 20 10% 13%;
 
-    --card: 30 25% 98%;
+    --card: 40 30% 99%;
     --card-foreground: 20 10% 13%;
 
-    --popover: 30 25% 98%;
+    --popover: 40 30% 99%;
     --popover-foreground: 20 10% 13%;
 
     --primary: 25 50% 57%;
@@ -43,7 +43,7 @@
   }
 
   body {
-    @apply bg-background text-foreground font-montserrat;
+    @apply bg-background text-foreground font-poppins;
   }
 }
 
@@ -53,19 +53,19 @@
   }
   
   .heading-xl {
-    @apply font-cormorant font-semibold text-4xl sm:text-5xl md:text-6xl leading-tight;
+    @apply font-dmsans font-semibold text-4xl sm:text-5xl md:text-6xl leading-tight;
   }
   
   .heading-lg {
-    @apply font-cormorant font-semibold text-3xl sm:text-4xl md:text-5xl leading-tight;
+    @apply font-dmsans font-semibold text-3xl sm:text-4xl md:text-5xl leading-tight;
   }
   
   .heading-md {
-    @apply font-cormorant font-semibold text-2xl sm:text-3xl leading-tight;
+    @apply font-dmsans font-semibold text-2xl sm:text-3xl leading-tight;
   }
   
   .heading-sm {
-    @apply font-cormorant font-semibold text-xl sm:text-2xl leading-tight;
+    @apply font-dmsans font-semibold text-xl sm:text-2xl leading-tight;
   }
   
   .paragraph {
@@ -73,15 +73,15 @@
   }
   
   .btn-primary {
-    @apply bg-maple-500 hover:bg-maple-600 text-white px-6 py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5;
+    @apply bg-maple-500 hover:bg-maple-600 text-white px-6 py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1 hover:scale-105;
   }
   
   .btn-secondary {
-    @apply bg-white hover:bg-gold-50 text-maple-700 border border-maple-300 px-6 py-3 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5;
+    @apply bg-white hover:bg-gold-50 text-maple-700 border border-maple-300 px-6 py-3 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-1 hover:scale-105;
   }
   
   .card-effect {
-    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:scale-[1.02];
   }
 
   .animated-underline {
@@ -97,7 +97,15 @@
   }
   
   .form-input {
-    @apply w-full px-4 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-maple-500;
+    @apply w-full px-4 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-maple-500 transition-all duration-300;
+  }
+  
+  .image-card {
+    @apply overflow-hidden rounded-xl shadow-md;
+  }
+  
+  .image-card img {
+    @apply transition-all duration-500 hover:scale-110;
   }
 }
 
@@ -118,6 +126,11 @@
   animation-delay: 900ms;
 }
 
+/* Social icon animations */
+.social-icon {
+  @apply transition-transform duration-300 hover:scale-125;
+}
+
 /* Scroll behaviors */
 .reveal {
   opacity: 0;
@@ -129,8 +142,28 @@
   transform: translateY(0);
 }
 
-/* Mouse follow effect */
+/* Enhanced Mouse follow effect */
 .parallax-layer {
   will-change: transform;
   transition: transform 0.1s cubic-bezier(0.2, 0.49, 0.32, 0.99);
+}
+
+/* Card hover effects */
+.feature-card {
+  transition: all 0.3s ease;
+}
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Back to top button */
+.back-to-top {
+  @apply fixed bottom-6 right-6 bg-maple-500 text-white p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 invisible z-50;
+}
+.back-to-top.visible {
+  @apply opacity-100 visible;
+}
+.back-to-top:hover {
+  @apply bg-maple-600 transform -translate-y-1;
 }

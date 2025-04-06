@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import BackToTop from './BackToTop';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -16,24 +17,26 @@ const Layout = ({ children }: LayoutProps) => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  // Initialize reveal animations on scroll
+  // Enhanced reveal animations on scroll with options
   useEffect(() => {
     const revealElements = document.querySelectorAll('.reveal');
     
     const revealOnScroll = () => {
+      const windowHeight = window.innerHeight;
+      const revealPoint = 150;
+      
       for (let i = 0; i < revealElements.length; i++) {
-        const windowHeight = window.innerHeight;
         const elementTop = revealElements[i].getBoundingClientRect().top;
-        const elementVisible = 150;
         
-        if (elementTop < windowHeight - elementVisible) {
+        if (elementTop < windowHeight - revealPoint) {
           revealElements[i].classList.add('active');
         }
       }
     };
     
     window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll(); // Check on first load
+    // Check on initial load
+    setTimeout(revealOnScroll, 100);
     
     return () => window.removeEventListener('scroll', revealOnScroll);
   }, [pathname]);
@@ -45,6 +48,7 @@ const Layout = ({ children }: LayoutProps) => {
         {children}
       </main>
       <Footer />
+      <BackToTop />
     </div>
   );
 };
