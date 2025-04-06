@@ -20,7 +20,7 @@ const SectionHeading = ({
       centered && 'text-center',
       className
     )}>
-      <h2 className="heading-lg text-foreground mb-4 reveal">{title}</h2>
+      <h1 className="heading-md text-foreground mb-4 reveal">{title}</h1>
       {subtitle && (
         <p className="paragraph max-w-3xl mx-auto reveal animation-delay-300">{subtitle}</p>
       )}

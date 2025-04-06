@@ -14,16 +14,16 @@ const About = () => {
     const handleMouseMove = (e: MouseEvent) => {
       if (heroRef.current) {
         const rect = heroRef.current.getBoundingClientRect();
-        const x = e.clientX - rect.left; 
+        const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         setMousePosition({ x, y });
-        
+
         // Calculate movement based on mouse position
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         const moveX = (x - centerX) / 25;
         const moveY = (y - centerY) / 25;
-        
+
         setParallaxLayers({ x: moveX * 0.4, y: moveY * 0.4 });
       }
     };
@@ -37,7 +37,7 @@ const About = () => {
       {/* Hero Section with Parallax Effect */}
       <section ref={heroRef} className="pt-32 pb-16 bg-gradient-to-b from-gold-50 to-white relative overflow-hidden">
         {/* Parallax background layer */}
-        <div 
+        <div
           className="absolute inset-0 parallax-layer"
           style={{
             transform: `translate(${parallaxLayers.x}px, ${parallaxLayers.y}px)`,
@@ -45,10 +45,14 @@ const About = () => {
           }}
         >
         </div>
-        
+
         <div className="container-custom relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="heading-xl mb-6 animate-fade-in">About Maple Wraps</h1>
+            <h1 className="heading-lg mb-6 animate-fade-in">
+              <span className="typewriter inline-block overflow-hidden whitespace-nowrap border-r-4 border-maple-500 pr-1 animate-typing">
+                About Maple Wraps
+              </span>
+            </h1>
             <p className="paragraph max-w-2xl mx-auto animate-fade-in animation-delay-300">
               We're on a mission to bring luxury flooring within reach for everyone through our innovative, high-quality floor wraps.
             </p>
@@ -73,9 +77,9 @@ const About = () => {
               </p>
             </div>
             <div className="lg:w-1/2">
-              <img 
-                src="https://images.unsplash.com/photo-1600607687644-a6c8bcf9f3f7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
-                alt="The Maple Wraps team" 
+              <img
+                src="https://images.unsplash.com/photo-1600607687644-a6c8bcf9f3f7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                alt="The Maple Wraps team"
                 className="rounded-xl shadow-xl reveal"
               />
             </div>
@@ -86,12 +90,12 @@ const About = () => {
       {/* Mission & Values Section */}
       <section className="py-20 bg-muted">
         <div className="container-custom">
-          <SectionHeading 
-            title="Our Mission & Values" 
+          <SectionHeading
+            title="Our Mission & Values"
             subtitle="What drives us every day"
             centered
           />
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
@@ -119,12 +123,11 @@ const About = () => {
                 description: "We believe in clear, honest pricing with no hidden fees or surprises."
               }
             ].map((value, index) => (
-              <div 
+              <div
                 key={index}
-                className={`bg-white p-8 rounded-xl shadow-md reveal ${
-                  index % 3 === 0 ? 'animation-delay-300' : 
+                className={`bg-white p-8 rounded-xl shadow-md reveal ${index % 3 === 0 ? 'animation-delay-300' :
                   index % 3 === 1 ? 'animation-delay-500' : 'animation-delay-700'
-                }`}
+                  }`}
               >
                 <h3 className="heading-sm mb-3 text-maple-700">{value.title}</h3>
                 <p className="text-foreground/70">{value.description}</p>
@@ -137,12 +140,12 @@ const About = () => {
       {/* Team Section */}
       <section className="py-20 bg-white">
         <div className="container-custom">
-          <SectionHeading 
-            title="Meet Our Team" 
+          <SectionHeading
+            title="Meet Our Team"
             subtitle="The talented individuals behind Maple Wraps"
             centered
           />
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
@@ -161,12 +164,11 @@ const About = () => {
                 bio: "Michelle is dedicated to making sure every client has an exceptional experience with us."
               }
             ].map((member, index) => (
-              <div 
+              <div
                 key={index}
-                className={`bg-white border border-border p-8 rounded-xl shadow-sm card-effect reveal ${
-                  index === 0 ? 'animation-delay-300' : 
+                className={`bg-white border border-border p-8 rounded-xl shadow-sm card-effect reveal ${index === 0 ? 'animation-delay-300' :
                   index === 1 ? 'animation-delay-500' : 'animation-delay-700'
-                }`}
+                  }`}
               >
                 <div className="w-20 h-20 rounded-full bg-maple-100 mx-auto mb-4 flex items-center justify-center">
                   <span className="text-2xl font-bold text-maple-600">{member.name.charAt(0)}</span>

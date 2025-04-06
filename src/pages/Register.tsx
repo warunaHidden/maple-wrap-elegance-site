@@ -34,8 +34,6 @@ const Register = () => {
     
     setLoading(true);
     
-    // This is a placeholder for actual registration logic
-    // In a real application, you would integrate with your auth provider
     setTimeout(() => {
       setLoading(false);
       toast.success('Registration successful! Please check your email to verify your account.');

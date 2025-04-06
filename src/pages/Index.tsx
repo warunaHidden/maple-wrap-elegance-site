@@ -23,16 +23,16 @@ const Index = () => {
     const handleMouseMove = (e: MouseEvent) => {
       if (heroRef.current) {
         const rect = heroRef.current.getBoundingClientRect();
-        const x = e.clientX - rect.left; 
+        const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         setMousePosition({ x, y });
-        
+
         // Calculate movement for different layers based on mouse position
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         const moveX = (x - centerX) / 25;
         const moveY = (y - centerY) / 25;
-        
+
         setParallaxLayers([
           { x: moveX * 0.2, y: moveY * 0.2 },  // Very subtle movement
           { x: moveX * 0.4, y: moveY * 0.4 },  // Subtle movement
@@ -59,7 +59,7 @@ const Index = () => {
       {/* Hero Section with enhanced parallax effect */}
       <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden">
         {/* Parallax background layers */}
-        <div 
+        <div
           className="absolute inset-0 parallax-layer"
           style={{
             transform: `translate(${parallaxLayers[0].x}px, ${parallaxLayers[0].y}px)`,
@@ -70,50 +70,44 @@ const Index = () => {
         >
           <div className="absolute inset-0 bg-white/70 backdrop-blur-sm"></div>
         </div>
-        
+
         {/* Radial gradient that follows the cursor */}
-        <div 
+        <div
           className="absolute inset-0 bg-transparent"
           style={{
             background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(214, 176, 130, 0.15) 0%, rgba(255, 255, 255, 0) 50%)`,
           }}
         ></div>
-        
+
         {/* Decorative elements that move with cursor */}
-        <div 
-          className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-maple-200/30 parallax-layer"
-          style={{
-            transform: `translate(${parallaxLayers[1].x * 2}px, ${parallaxLayers[1].y * 2}px)`,
-          }}
-        ></div>
-        <div 
+        <div
           className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full bg-gold-200/30 parallax-layer"
           style={{
             transform: `translate(${parallaxLayers[2].x * 2}px, ${parallaxLayers[2].y * 2}px)`,
           }}
         ></div>
-        
+
         {/* Additional floating elements for enhanced visual effect */}
-        <div 
+        <div
           className="absolute top-1/3 right-1/3 w-24 h-24 rounded-full bg-maple-100/20 parallax-layer animate-float"
           style={{
             transform: `translate(${parallaxLayers[3].x * 3}px, ${parallaxLayers[3].y * 3}px)`,
             animationDelay: '1s'
           }}
         ></div>
-        <div 
+        <div
           className="absolute bottom-1/3 left-1/3 w-20 h-20 rounded-full bg-gold-100/20 parallax-layer animate-float"
           style={{
             transform: `translate(${parallaxLayers[3].x * 2.5}px, ${parallaxLayers[3].y * 2.5}px)`,
             animationDelay: '2s'
           }}
         ></div>
-        
+
         <div className="container-custom relative z-10">
           <div className="max-w-3xl">
             <h1 className="heading-xl mb-4">
               <span className="typewriter inline-block overflow-hidden whitespace-nowrap border-r-4 border-maple-500 pr-1">
-                Transform Your Floors into Masterpieces
+                Transform Your Floors into <br />Masterpieces
               </span>
             </h1>
             <p className="text-xl sm:text-2xl font-dmsans text-gold-600 mb-6 animate-fade-in animation-delay-300">
@@ -142,8 +136,8 @@ const Index = () => {
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="lg:w-1/2">
               <div className="image-card overflow-hidden rounded-xl shadow-xl reveal transform transition-all duration-500 hover:scale-105">
-                <img 
-                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                <img
+                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
                   alt="Elegant floor wrap in modern home"
                   className="w-full h-full object-cover transition-all duration-700 hover:scale-110"
                 />
@@ -168,54 +162,54 @@ const Index = () => {
       {/* What We Offer Section */}
       <section className="py-20 bg-muted">
         <div className="container-custom">
-          <SectionHeading 
-            title="What We Offer" 
+          <SectionHeading
+            title="What We Offer"
             subtitle="Our comprehensive services provide everything you need for stunning floor transformations"
             centered
           />
-          
+
           <div className="grid md:grid-cols-3 gap-8">
-            <FeatureCard 
+            <FeatureCard
               title="Pre-Designed Floor Wraps"
               description="Choose from our collection of stylish designs and transform your space in just 3 easy steps."
               icon={
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="stroke-current">
-                  <rect x="2" y="2" width="20" height="20" rx="2" strokeWidth="1.5"/>
-                  <path d="M2 8H22" strokeWidth="1.5"/>
-                  <path d="M8 8V22" strokeWidth="1.5"/>
+                  <rect x="2" y="2" width="20" height="20" rx="2" strokeWidth="1.5" />
+                  <path d="M2 8H22" strokeWidth="1.5" />
+                  <path d="M8 8V22" strokeWidth="1.5" />
                 </svg>
               }
               className="animation-delay-300"
             />
-            
-            <FeatureCard 
+
+            <FeatureCard
               title="Combined Services"
               description="From initial setup to finishing touches, we handle all aspects of installation so you don't have to worry."
               icon={
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="stroke-current">
-                  <path d="M17 20H7C5.89543 20 5 19.1046 5 18V9C5 7.89543 5.89543 7 7 7H17C18.1046 7 19 7.89543 19 9V18C19 19.1046 18.1046 20 17 20Z" strokeWidth="1.5"/>
-                  <path d="M16 7V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V7" strokeWidth="1.5"/>
-                  <path d="M12 12V15" strokeWidth="1.5"/>
-                  <circle cx="12" cy="12" r="1" fill="currentColor"/>
+                  <path d="M17 20H7C5.89543 20 5 19.1046 5 18V9C5 7.89543 5.89543 7 7 7H17C18.1046 7 19 7.89543 19 9V18C19 19.1046 18.1046 20 17 20Z" strokeWidth="1.5" />
+                  <path d="M16 7V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V7" strokeWidth="1.5" />
+                  <path d="M12 12V15" strokeWidth="1.5" />
+                  <circle cx="12" cy="12" r="1" fill="currentColor" />
                 </svg>
               }
               className="animation-delay-500"
             />
-            
-            <FeatureCard 
+
+            <FeatureCard
               title="Pass the Savings"
               description="By offering pre-designed options with minimal customization, we can provide high-quality wraps at affordable prices."
               icon={
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="stroke-current">
-                  <path d="M12 6V18" strokeWidth="1.5" strokeLinecap="round"/>
-                  <path d="M15 9.5C15 8.12 13.657 7 12 7C10.343 7 9 8.12 9 9.5C9 10.88 10.343 12 12 12C13.657 12 15 13.12 15 14.5C15 15.88 13.657 17 12 17C10.343 17 9 15.88 9 14.5" strokeWidth="1.5" strokeLinecap="round"/>
-                  <circle cx="12" cy="12" r="9" strokeWidth="1.5"/>
+                  <path d="M12 6V18" strokeWidth="1.5" strokeLinecap="round" />
+                  <path d="M15 9.5C15 8.12 13.657 7 12 7C10.343 7 9 8.12 9 9.5C9 10.88 10.343 12 12 12C13.657 12 15 13.12 15 14.5C15 15.88 13.657 17 12 17C10.343 17 9 15.88 9 14.5" strokeWidth="1.5" strokeLinecap="round" />
+                  <circle cx="12" cy="12" r="9" strokeWidth="1.5" />
                 </svg>
               }
               className="animation-delay-700"
             />
           </div>
-          
+
           <div className="text-center mt-12">
             <Button asChild className="btn-primary reveal hover:scale-105 transition-transform">
               <Link to="/services">View All Services</Link>
@@ -227,12 +221,12 @@ const Index = () => {
       {/* Gallery Section with enhanced animations */}
       <section className="py-20">
         <div className="container-custom">
-          <SectionHeading 
-            title="Our Floor Wrap Gallery" 
+          <SectionHeading
+            title="Our Floor Wrap Gallery"
             subtitle="Take a look at some of our stunning installations"
             centered
           />
-          
+
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               "https://images.unsplash.com/photo-1600585154526-990dced4db0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
@@ -242,15 +236,14 @@ const Index = () => {
               "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
               "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
             ].map((img, index) => (
-              <div 
-                key={index} 
-                className={`group relative overflow-hidden rounded-xl shadow-md reveal ${
-                  index % 3 === 0 ? 'animation-delay-300' : 
+              <div
+                key={index}
+                className={`group relative overflow-hidden rounded-xl shadow-md reveal ${index % 3 === 0 ? 'animation-delay-300' :
                   index % 3 === 1 ? 'animation-delay-500' : 'animation-delay-700'
-                }`}
+                  }`}
               >
-                <img 
-                  src={img} 
+                <img
+                  src={img}
                   alt={`Floor wrap installation ${index + 1}`}
                   className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
                 />
@@ -268,12 +261,12 @@ const Index = () => {
       {/* Testimonials Section */}
       <section className="py-20 bg-gradient-to-b from-white to-muted">
         <div className="container-custom">
-          <SectionHeading 
-            title="What Our Clients Say" 
+          <SectionHeading
+            title="What Our Clients Say"
             subtitle="Don't just take our word for it - see what our satisfied customers have to say"
             centered
           />
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
@@ -292,12 +285,11 @@ const Index = () => {
                 quote: "I recommend Maple Wraps to all my clients looking for affordable luxury. Their pre-designed options are stunning and installation is flawless."
               }
             ].map((testimonial, index) => (
-              <div 
+              <div
                 key={index}
-                className={`bg-white p-8 rounded-xl shadow-md reveal hover:shadow-xl transition-all duration-300 hover:-translate-y-2 ${
-                  index === 0 ? 'animation-delay-300' : 
+                className={`bg-white p-8 rounded-xl shadow-md reveal hover:shadow-xl transition-all duration-300 hover:-translate-y-2 ${index === 0 ? 'animation-delay-300' :
                   index === 1 ? 'animation-delay-500' : 'animation-delay-700'
-                }`}
+                  }`}
               >
                 <div className="mb-4 text-gold-500">
                   {[...Array(5)].map((_, i) => (
