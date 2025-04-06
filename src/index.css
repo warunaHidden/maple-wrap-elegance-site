@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap');
 
 @tailwind base;
@@ -157,13 +156,4 @@
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-/* Back to top button */
-.back-to-top {
-  @apply fixed bottom-6 right-6 bg-maple-500 text-white p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 invisible z-50;
-}
-.back-to-top.visible {
-  @apply opacity-100 visible;
-}
-.back-to-top:hover {
-  @apply bg-maple-600 transform -translate-y-1;
-}
+/* Removing the problematic back-to-top styles since we're now using inline Tailwind classes */
