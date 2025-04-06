@@ -26,7 +26,8 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/pricing-calculator" element={<PricingCalculator />} />
+          <Route path="/pricing" element={<PricingCalculator />} />
+          <Route path="/pricing-calculator" element={<PricingCalculator />} /> {/* Keep for backward compatibility */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<NotFound />} />

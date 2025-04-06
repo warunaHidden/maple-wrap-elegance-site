@@ -24,7 +24,7 @@ const CTASection = () => {
               <Link to="/contact">Contact Us Today</Link>
             </Button>
             <Button asChild className="bg-gold-400 hover:bg-gold-500 text-maple-900 transform hover:scale-105 transition-all text-lg">
-              <Link to="/pricing-calculator">Try Our Pricing Calculator</Link>
+              <Link to="/pricing">Try Our Pricing Calculator</Link>
             </Button>
           </div>
         </div>

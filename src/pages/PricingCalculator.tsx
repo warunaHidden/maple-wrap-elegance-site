@@ -36,6 +36,7 @@ const PricingCalculator = () => {
   
   // Pricing calculation state
   const [price, setPrice] = useState<number | null>(null);
+  const [vendorPrice, setVendorPrice] = useState<number | null>(null);
 
   // Enhanced mouse tracking for parallax effect
   useEffect(() => {
@@ -120,6 +121,8 @@ const PricingCalculator = () => {
     }
     
     setPrice(Math.round(totalPrice));
+    // Calculate vendor price (80% of market price)
+    setVendorPrice(Math.round(totalPrice * 0.8));
   };
 
   return (
@@ -160,6 +163,7 @@ const PricingCalculator = () => {
               <SectionHeading 
                 title="Stage Wrap Options" 
                 subtitle="Let us know if you need a stage wrap for your event"
+                className="text-2xl"
               />
               
               <div className="space-y-6">
@@ -168,7 +172,7 @@ const PricingCalculator = () => {
                     <Label className="text-lg font-medium">Does your event have a stage?</Label>
                   </div>
                   <RadioGroup 
-                    defaultValue={hasStage} 
+                    value={hasStage} 
                     onValueChange={setHasStage}
                     className="flex gap-6"
                   >
@@ -246,6 +250,7 @@ const PricingCalculator = () => {
               <SectionHeading 
                 title="Floor Wrap Options" 
                 subtitle="Customize your floor wrap based on your needs"
+                className="text-2xl"
               />
               
               <div className="space-y-6">
@@ -281,7 +286,7 @@ const PricingCalculator = () => {
                     <Label className="text-lg font-medium">Is the floor wrap matte black?</Label>
                   </div>
                   <RadioGroup 
-                    defaultValue={isMatteBlack} 
+                    value={isMatteBlack} 
                     onValueChange={setIsMatteBlack}
                     className="flex gap-6"
                   >
@@ -301,7 +306,7 @@ const PricingCalculator = () => {
                   <div className="grid md:grid-cols-2 gap-6 bg-white p-5 rounded-lg shadow-sm">
                     <div className="space-y-3">
                       <h4 className="font-medium text-maple-800">Printed Designs</h4>
-                      <RadioGroup defaultValue={designType} onValueChange={setDesignType}>
+                      <RadioGroup value={designType} onValueChange={setDesignType}>
                         <div className="flex items-center space-x-2 p-2 hover:bg-muted rounded-md transition-colors">
                           <RadioGroupItem value="print10x10" id="print-10x10" />
                           <Label htmlFor="print-10x10" className="cursor-pointer">10x10 Pattern</Label>
@@ -327,7 +332,7 @@ const PricingCalculator = () => {
                     
                     <div className="space-y-3">
                       <h4 className="font-medium text-maple-800">Chrome Designs</h4>
-                      <RadioGroup defaultValue={designType} onValueChange={setDesignType}>
+                      <RadioGroup value={designType} onValueChange={setDesignType}>
                         <div className="flex items-center space-x-2 p-2 hover:bg-muted rounded-md transition-colors">
                           <RadioGroupItem value="chrome10x10" id="chrome-10x10" />
                           <Label htmlFor="chrome-10x10" className="cursor-pointer">10x10 Chrome</Label>
@@ -388,9 +393,18 @@ const PricingCalculator = () => {
               
               {price !== null && (
                 <div className="mt-8 p-6 bg-gold-50 rounded-xl shadow-md animate-zoom-in">
-                  <h3 className="heading-md text-maple-700 mb-2">Estimated Price</h3>
-                  <p className="text-3xl font-bold text-maple-800">${price}</p>
-                  <p className="text-sm text-maple-600 mt-2">This is an estimate only. Contact us for an exact quote.</p>
+                  <h3 className="heading-md text-maple-700 mb-4">Estimated Pricing</h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="p-4 bg-white rounded-lg shadow-sm">
+                      <p className="text-lg font-medium text-maple-600 mb-2">Market Price</p>
+                      <p className="text-3xl font-bold text-maple-800">${price}</p>
+                    </div>
+                    <div className="p-4 bg-white rounded-lg shadow-sm">
+                      <p className="text-lg font-medium text-maple-600 mb-2">Vendor Price</p>
+                      <p className="text-3xl font-bold text-gold-600">${vendorPrice}</p>
+                    </div>
+                  </div>
+                  <p className="text-sm text-maple-600 mt-4">This is an estimate only. Contact us for an exact quote.</p>
                 </div>
               )}
             </div>

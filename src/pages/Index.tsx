@@ -127,7 +127,7 @@ const Index = () => {
                 <Link to="/services">Explore Services</Link>
               </Button>
               <Button asChild variant="outline" className="btn-secondary text-lg">
-                <Link to="/pricing-calculator" className="flex items-center">
+                <Link to="/pricing" className="flex items-center">
                   Pricing Calculator <ChevronRight className="ml-1 h-4 w-4" />
                 </Link>
               </Button>
